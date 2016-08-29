@@ -1,0 +1,22 @@
+{
+  "name": "rou",
+  "version": "1.0.0",
+  "author": "Bilguun",
+  "homepage": "http://53ck.github.io/rou",
+  "description": "Simple fluid, Sass-based responsive grids.",
+  "main": "rou.sass",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/53ck/rou.git"
+  },
+  "keywords": [
+    "bilguun",
+    "sass",
+    "grids",
+    "layout",
+    "grid",
+    "flex",
+    "flexbox"
+  ],
+  "license": "MIT"
+}

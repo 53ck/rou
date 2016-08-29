@@ -1,0 +1,341 @@
+/**
+ * Rou
+ * Simple fluid, Sass-based responsive grids.
+ * https://github.com/53ck/rou
+ * Copyright 2016, Bilguun
+ */
+
+
+/*
+  Variables
+ */
+$grid-type      : inline-block !default // or float
+$grid-flex      : true !default
+$grid-offset    : true !default
+$grid-responsive: true !default
+$grid-box-sizing: true !default
+$gutter         : 20px !default // none to disable
+
+$lap-start      : 481px !default
+$desk-start     : 1024px !default
+$desk-wide-start: 1200px !default
+
+$mob-end        : $lap-start - 1px !default
+$lap-end        : $desk-start - 1px !default
+
+$mob-offset     : false !default
+$por-offset     : false !default
+$lap-offset     : false !default
+
+
+/*
+  Mixins
+ */
+=grid-type($prefix: "", $type: "width")
+  .#{$prefix}--full
+    #{$type}: 100%
+
+  .#{$prefix}--half
+    #{$type}: 50%
+
+  .#{$prefix}--1-3
+    #{$type}: 33.333%
+
+  .#{$prefix}--2-3
+    #{$type}: 66.666%
+
+  .#{$prefix}--1-4
+    #{$type}: 25%
+
+  .#{$prefix}--2-4
+    @extend .#{$prefix}--half
+
+  .#{$prefix}--3-4
+    #{$type}: 75%
+
+  .#{$prefix}--1-5
+    #{$type}: 20%
+
+  .#{$prefix}--2-5
+    #{$type}: 40%
+
+  .#{$prefix}--3-5
+    #{$type}: 60%
+
+  .#{$prefix}--4-5
+    #{$type}: 80%
+
+  .#{$prefix}--1-6
+    #{$type}: 16.666%
+
+  .#{$prefix}--2-6
+    @extend .#{$prefix}--1-3
+
+  .#{$prefix}--3-6
+    @extend .#{$prefix}--half
+
+  .#{$prefix}--4-6
+    @extend .#{$prefix}--2-3
+
+  .#{$prefix}--5-6
+    #{$type}: 83.333%
+
+  .#{$prefix}--1-8
+    #{$type}: 12.5%
+
+  .#{$prefix}--2-8
+    @extend .#{$prefix}--1-4
+
+  .#{$prefix}--3-8
+    #{$type}: 37.5%
+
+  .#{$prefix}--4-8
+    @extend .#{$prefix}--half
+
+  .#{$prefix}--5-8
+    #{$type}: 62.5%
+
+  .#{$prefix}--6-8
+    @extend .#{$prefix}--3-4
+
+  .#{$prefix}--7-8
+    #{$type}: 87.5%
+
+  .#{$prefix}--1-10
+    #{$type}: 10%
+
+  .#{$prefix}--2-10
+    @extend .#{$prefix}--1-5
+
+  .#{$prefix}--3-10
+    #{$type}: 30%
+
+  .#{$prefix}--4-10
+    @extend .#{$prefix}--2-5
+
+  .#{$prefix}--5-10
+    @extend .#{$prefix}--half
+
+  .#{$prefix}--6-10
+    @extend .#{$prefix}--3-5
+
+  .#{$prefix}--7-10
+    #{$type}: 70%
+
+  .#{$prefix}--8-10
+    @extend .#{$prefix}--4-5
+
+  .#{$prefix}--9-10
+    #{$type}: 90%
+
+  .#{$prefix}--1-12
+    #{$type}: 8.333%
+
+  .#{$prefix}--2-12
+    @extend .#{$prefix}--1-6
+
+  .#{$prefix}--3-12
+    @extend .#{$prefix}--1-4
+
+  .#{$prefix}--4-12
+    @extend .#{$prefix}--1-3
+
+  .#{$prefix}--5-12
+    #{$type}: 41.666%
+
+  .#{$prefix}--6-12
+    @extend .#{$prefix}--half
+
+  .#{$prefix}--7-12
+    #{$type}: 58.333%
+
+  .#{$prefix}--8-12
+    @extend .#{$prefix}--2-3
+
+  .#{$prefix}--9-12
+    @extend .#{$prefix}--3-4
+
+  .#{$prefix}--10-12
+    @extend .#{$prefix}--5-6
+
+  .#{$prefix}--11-12
+    #{$type}: 91.666%
+
+=media-query($media-query)
+  @if $media-query == mob
+    @media only screen and (max-width: $mob-end)
+      @content
+
+  @if $media-query == lap
+    @media only screen and (min-width: $lap-start) and (max-width: $lap-end)
+      @content
+
+  @if $media-query == por
+    @media only screen and (max-width: $lap-end)
+      @content
+
+  @if $media-query == desk
+    @media only screen and (min-width: $desk-start)
+      @content
+
+  @if $media-query == desk-wide
+    @media only screen and (min-width: $desk-wide-start)
+      @content
+
+=clearfix
+  &:after
+    content: ""
+    display: table
+    clear: both
+
+
+/*
+  Grid
+ */
+.grid
+  @if $gutter != none
+    margin-left: -$gutter
+  list-style: none
+
+  @if $grid-type == float
+    +clearfix
+  @else
+    letter-spacing: -0.31em
+
+.col
+  @if $grid-type == float
+    float: left
+  @else
+    display: inline-block
+    letter-spacing: normal
+    vertical-align: top
+    word-spacing: normal
+  width: 100%
+  @if $gutter != none
+    padding-left: $gutter
+  @if $grid-box-sizing == true
+    box-sizing: border-box
+
++grid-type("col")
+
+@if $grid-type != float
+  .opera:-o-prefocus,
+  .grid
+    word-spacing: -0.43em
+
+  .grid--right
+    text-align: right
+
+    > .col
+      text-align: left
+
+  .grid--center
+    text-align: center
+
+    > .col
+      text-align: left
+
+  .grid--middle > .col
+    vertical-align: middle
+
+  .grid--bottom > .col
+    vertical-align: bottom
+
+@if $gutter != none
+  .grid--full
+    margin-left: 0
+
+    > .col,
+    > .cell
+      padding-left: 0
+
+
+/*
+  Grid Flex
+ */
+@if $grid-flex == true
+  .grid--flex
+    display: flex
+    flex-wrap: wrap
+
+    & > .col
+      flex: none
+
+  .cell
+    flex: 1
+    @if $gutter != none
+      padding-left: $gutter
+    @if $grid-type != float
+      letter-spacing: normal
+      word-spacing: normal
+    @if $grid-box-sizing == true
+      box-sizing: border-box
+
+  .grid--stretch > .cell
+    display: flex
+
+  .grid--top
+    align-items: flex-start
+
+  .grid--middle
+    align-items: center
+
+  .grid--bottom
+    align-items: flex-end
+
+  .grid--auto > .cell
+    flex: none
+
+  .grid--left
+    justify-content: flex-start
+
+  .grid--center
+    justify-content: center
+
+  .grid--right
+    justify-content: flex-end
+
+  .grid--between
+    justify-content: space-between
+
+  .grid--around
+    justify-content: space-around
+
+  .cell--top
+    align-self: flex-start
+
+  .cell--middle
+    align-self: center
+
+  .cell--bottom
+    align-self: flex-end
+
+
+/*
+  Grid Offset
+ */
+@if $grid-offset == true
+  +grid-type("offset", "margin-left")
+
+
+/*
+  Grid Responsive
+ */
+@if $grid-responsive == true
+  +media-query(mob)
+    +grid-type("mob")
+
+    @if $mob-offset == true
+      +grid-type("mob--offset", "margin-left")
+
+  +media-query(lap)
+    +grid-type("lap")
+
+    @if $lap-offset == true
+      +grid-type("lap--offset", "margin-left")
+
+  +media-query(por)
+    +grid-type("por")
+
+    @if $por-offset == true
+      +grid-type("por--offset", "margin-left")
